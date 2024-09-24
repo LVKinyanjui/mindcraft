@@ -9,8 +9,14 @@ RUN apt-get update \
     && apt-get install -y \
     openjdk-8-jdk \ 
     curl \
+    wget \
 
     && rm -rf /var/lib/apt/lists/*
+
+# Install Minecraft Java Edition
+RUN wget https://launcher.mojang.com/download/Minecraft.deb
+RUN dpkg -i ./Minecraft.deb
+RUN apt -f install
 
 # Install node and its dependencies
 ENV NODE_VERSION=16.13.0
@@ -23,5 +29,4 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 # RUN node --version
 # RUN npm --version
 
-CMD ["node", "-v"]
-
+CMD ["minecraft-launcher"]
